@@ -18,7 +18,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 // making routes
-app.use('/api', allRoutes)
+app.use('/api', allRoutes);
+
+//error handler
+app.use((err, req, res, next)=>{
+    const status = err.statusCode || 500;
+    const message = err.message || 'Internal server error!';
+
+    return res.status(status).json({message, stack: err.stack});
+});
 
 const connectDB = async ()=> {
     try{
