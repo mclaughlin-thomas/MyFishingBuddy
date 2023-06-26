@@ -44,11 +44,11 @@ export const login = async(req, res, next) =>{
         }
         const payload = {
             id: user._id,
-            name: user.name
-        }
+            name: user.name,
+        };
         const token = jwt.sign(payload, process.env.JWT_SECRET,{
-            expiresIn: '1d'
-        })
+            expiresIn: '1d',
+        });
         return res.cookie('access_token', token,{
             httpOnly: true,
         }).status(200)
