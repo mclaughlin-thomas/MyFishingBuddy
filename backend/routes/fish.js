@@ -1,9 +1,10 @@
 import express from 'express';
+import { createTask, getAllTasks } from '../controllers/fish.js';
 
 const router = express.Router();
 
-router.get('/hello', (req, res) => {
-    res.json('hello world!');
-});
+router.post('/', createTask);
+router.get('/all',getAllTasks)
+
 
 export default router;

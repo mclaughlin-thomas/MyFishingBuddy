@@ -15,7 +15,7 @@ const fishSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
-    },
+    }
 },{timestamps: true});
 
-export default mongoose.model("Fish",taskSchema)
+export default mongoose.model("Fish",fishSchema)
