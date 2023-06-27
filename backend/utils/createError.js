@@ -3,5 +3,4 @@ export default ({message, status}) =>{
     error.message=message;
     error.statusCode = status;
     return error;
-
 }
