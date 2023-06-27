@@ -3,13 +3,13 @@ import createError from '../utils/createError.js'
 
 export const createTask = async (req, res, next) => {
     try{
-        const newTask = new Fish({
+        const newFish = new Fish({
             title: req.body.title,
             user: req.user.id,
             completed: req.body.completed,
         });
-        const savedTask = await newTask.save();
-        return res.status(201).json(savedTask);
+        const savedFish = await newFish.save();
+        return res.status(201).json(savedFish);
     }catch(err){
         return next(err);
     }
@@ -17,8 +17,8 @@ export const createTask = async (req, res, next) => {
 
 export const getAllFish = async (req,res,next) => {
     try{
-        const tasks = await Fish.find({});
-        return res.status(200).json(tasks);
+        const fishes = await Fish.find({});
+        return res.status(200).json(fishes);
     }catch(err){
         return next(err);
     }
@@ -26,8 +26,8 @@ export const getAllFish = async (req,res,next) => {
 
 export const getCurrentUsersFish = async (req,res,next) => {
     try{
-        const tasks = await Fish.find({user: req.user.id});
-        return res.status(200).json(tasks);
+        const fishes = await Fish.find({user: req.user.id});
+        return res.status(200).json(fishes);
     }catch(err){
         return next(err);
     }
@@ -35,11 +35,11 @@ export const getCurrentUsersFish = async (req,res,next) => {
 
 export const updateFish = async (req,res,next)=> {
     try{
-        const task = await Fish.findById(req.params.fishId).exec();
-        if(!task){
+        const fish = await Fish.findById(req.params.fishId).exec();
+        if(!fish){
             return next(createError({status: 404, message: "No Fish were found!"}));
         }
-        if(task.user.toString() !==req.user.id){
+        if(fish.user.toString() !==req.user.id){
             return next(createError({status: 404, message: "That not your Fishy!"}));
         }
         const updatedFish = await Fish.findByIdAndUpdate(req.params.fishId, {
@@ -55,11 +55,11 @@ export const updateFish = async (req,res,next)=> {
 
 export const deleteFish = async (req,res,next)=>{
     try{
-        const task = await Fish.findById(req.params.fishId).exec();
-        if(!task){
+        const fish = await Fish.findById(req.params.fishId).exec();
+        if(!fish){
             return next(createError({status: 404, message: "No Fish were found!"}));
         }
-        if(task.user.toString() !==req.user.id){
+        if(fish.user.toString() !==req.user.id){
             return next(createError({status: 404, message: "That not your Fishy!"}));
         }
 
