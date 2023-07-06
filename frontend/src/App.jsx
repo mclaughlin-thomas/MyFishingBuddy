@@ -4,8 +4,9 @@ import React from 'react';
 import Home from './pages/Home';
 import EditProfile from './pages/EditProfile';
 import Auth from './pages/Auth';
+import PrivateRoutes from './components/PrivateRoutes';
 
-export default function App() {
+function App() {
   return (
     <>
         <Toaster
@@ -19,10 +20,14 @@ export default function App() {
         </Toaster>
         
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/edit-profile' element={<EditProfile />} />
-          <Route path='/auth' element={<Auth />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
+          </Route>
+          <Route path="/auth" element={<Auth />} />
         </Routes>
     </>
-  )
+  );
 }
+
+export default App;
