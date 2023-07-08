@@ -1,7 +1,7 @@
 import bcrpytjs from 'bcryptjs';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
-import createError from '../utils/createError.js'
+import createError from '../utils/createError.js';
 
 export const register = async(req, res, next) => {
     if(!req.body.name || !req.body.email || !req.body.password){
@@ -64,15 +64,15 @@ export const logout = (req, res)=>{
     return res.status(200).json({message: 'Logout Message!'});
 };
 
-export const isLoggedIn = (req, res)=>{
-    const token = req.cookie.access_token;
-    if (!token){
-        return res.json(false);
+export const isLoggedIn = async (req, res) => {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.json(false);
     }
-    return jwt.verify(token, process.env.JWT_SECRET, (err)=>{
-        if (err){
-            return res.json(false);
-        }
-        return res.json(true);
+    return jwt.verify(token, process.env.JWT_SECRET, (err) => {
+      if (err) {
+        return res.json(false);
+      }
+      return res.json(true);
     });
 };

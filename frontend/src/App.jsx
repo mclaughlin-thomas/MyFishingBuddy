@@ -10,14 +10,13 @@ function App() {
   return (
     <>
         <Toaster
-         position='top-right'
-         toastOptions={{
+          position="top-right"
+          toastOptions={{
             style: {
-              fontSize: '1.8rem'
-            }
-        }}
-        >Hi
-        </Toaster>
+              fontSize: '1.8rem',
+            },
+          }}
+        />
         
         <Routes>
           <Route element={<PrivateRoutes />}>
