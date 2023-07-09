@@ -1,24 +1,97 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import classes from './TaskList.module.scss';
+import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import FishItem from './FishItem';
+import classes from './FishList.module.scss';
 
-function TaskList() {
-    const [TaskList, setTaskList] = useState([]);
+function FishList() {
+  const [fishList, setFishList] = useState([]);
+  const [isAddingNew, setIsAddingNew] = useState(false);
+  const [newCatch, setNewFish] = useState('');
 
-    const getTasks= async () =>{
-        try{
-            const { data } = await axios.get('/api/tasks/mytasks');
-            setTaskList(
-                data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-            )
-        }catch(err){
-            console.log(err);
-        }
+  const getCatches = async () => {
+    try {
+      const { data } = await axios.get('/api/fishes/myFish');
+      setFishList(
+        data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+      );
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-    return (
-    <div>TaskList</div>
-    );
+  useEffect(() => {
+    getCatches();
+  }, []);
+
+  const addNewButtonClick = () => {
+    setIsAddingNew(!isAddingNew);
+  };
+
+  const addNewCatch = async (e) => {
+    e.preventDefault();
+    if (newCatch.length <= 0) {
+      toast.error('Fish data is empty, fill in the stats!');
+      return;
+    }
+    try {
+      const { data } = await axios.post('/api/fishes/', {
+        title: newCatch,
+      });
+      toast.success('New Fish added');
+      setIsAddingNew(false);
+      setNewFish('');
+      setFishList([{ ...data }, ...fishList]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteFish = async (id) => {
+    try {
+      await axios.delete(`/api/fishes/${id}`);
+      toast.success('Catch deleted');
+      setFishList(fishList.filter((task) => task._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div>
+      <div className={classes.topBar}>
+        <button
+          type="button"
+          className={classes.addNew}
+          onClick={addNewButtonClick}
+        >
+          Add New
+        </button>
+      </div>
+      {isAddingNew && (
+        <form className={classes.addNewForm} onSubmit={addNewCatch}>
+          <input
+            type="text"
+            value={newCatch}
+            onChange={(e) => setNewFish(e.target.value)}
+            placeholder="Catch name"
+          />
+          <button type="submit">Upload</button>
+        </form>
+      )}
+      {fishList.length > 0 ? (
+        <table className={classes.fishList_table}>
+          <tbody>
+            {fishList.map((task) => (
+              <FishItem key={task._id} task={task} deleteTask={deleteFish} />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        'No Catches Found. Create a new catch'
+      )}
+    </div>
+  );
 }
 
-export default TaskList
+export default FishList;
