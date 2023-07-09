@@ -51,7 +51,7 @@ function FishList() {
     try {
       await axios.delete(`/api/fishes/${id}`);
       toast.success('Catch deleted');
-      setFishList(fishList.filter((task) => task._id !== id));
+      setFishList(fishList.filter((fishes) => fishes._id !== id));
     } catch (err) {
       console.log(err);
     }
@@ -82,8 +82,8 @@ function FishList() {
       {fishList.length > 0 ? (
         <table className={classes.fishList_table}>
           <tbody>
-            {fishList.map((task) => (
-              <FishItem key={task._id} task={task} deleteTask={deleteFish} />
+            {fishList.map((fishes) => (
+              <FishItem key={fishes._id} fish={fishes} deleteFish={deleteFish} />
             ))}
           </tbody>
         </table>

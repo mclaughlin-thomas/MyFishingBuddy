@@ -1,7 +1,7 @@
 import Fish from '../models/Fish.js'
 import createError from '../utils/createError.js'
 
-export const createTask = async (req, res, next) => {
+export const createFish = async (req, res, next) => {
     try{
         const newFish = new Fish({
             title: req.body.title,
@@ -64,7 +64,7 @@ export const deleteFish = async (req,res,next)=>{
         }
 
         await Fish.findByIdAndDelete(req.params.fishId);
-        return res.status(200).json('Task deleted successfully!');
+        return res.status(200).json('Fish deleted successfully!');
     }catch(err){
         return next(err);
     }

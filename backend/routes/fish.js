@@ -1,9 +1,9 @@
 import express from 'express';
-import { createTask, getAllFish, getCurrentUsersFish, updateFish, deleteFish } from '../controllers/fish.js';
+import { createFish, getAllFish, getCurrentUsersFish, updateFish, deleteFish } from '../controllers/fish.js';
 
 const router = express.Router();
 
-router.post('/', createTask);
+router.post('/', createFish);
 router.get('/all',getAllFish);
 router.get('/myFish', getCurrentUsersFish);
 router.put('/:fishId', updateFish);
