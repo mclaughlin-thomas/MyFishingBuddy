@@ -32,7 +32,7 @@ function FishItem({ fish, deleteFish }) {
         <p>{fish.title}</p>
       </td>
       <td>{isCompleted ? 'Complete' : 'Incomplete'}</td>
-      <td>{moment(fish.createdAt).format('MMM Do YY')}</td>
+      <td>{moment(fish.createdAt).format('HH:mm MMM Do YYYY')}</td>
       <td>
         <button
           type="button"
