@@ -88,7 +88,7 @@ function FishList() {
           </tbody>
         </table>
       ) : (
-        'No Catches Found. Create a new catch'
+        <div className={classes.noCatches}>No Catches Found. Go catch a fish!</div>
       )}
     </div>
   );
