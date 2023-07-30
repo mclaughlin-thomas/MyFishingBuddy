@@ -11,6 +11,9 @@ const fishSchema = new Schema({
         required: false,
         default: false,
     },
+    stats: {
+        type: String,
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",

@@ -8,7 +8,7 @@ function FishItem({ fish, deleteFish }) {
   const handleMarkAsComplete = async () => {
     try {
       await axios.put(`/api/fishes/${fish._id}`, {
-        completed: true, // Always mark as complete since the checkbox is removed
+        completed: true, // Checkmark feature no longer used.
       });
       toast.success('Catch marked as complete successfully');
     } catch (err) {
@@ -18,11 +18,11 @@ function FishItem({ fish, deleteFish }) {
 
   return (
     <tr className={classes.fish_item}>
-      <td className={classes.fish_name}>
-        
-        <p>{fish.title}</p>
-      </td>
-      {/* <td>{fish.completed ? 'Complete' : 'Incomplete'}</td> */}
+      <td className={classes.fish_name}> <p> {fish.title} </p> </td>
+
+      <td className={classes.fish_name}> <p> {fish.stats} </p> </td>
+      
+
       <td>{moment(fish.createdAt).format('HH:mm MMM Do YYYY')}</td>
       <td>
         <button

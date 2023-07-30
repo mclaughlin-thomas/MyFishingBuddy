@@ -7,6 +7,7 @@ export const createFish = async (req, res, next) => {
             title: req.body.title,
             user: req.user.id,
             completed: req.body.completed,
+            stats: req.body.stats,
         });
         const savedFish = await newFish.save();
         return res.status(201).json(savedFish);

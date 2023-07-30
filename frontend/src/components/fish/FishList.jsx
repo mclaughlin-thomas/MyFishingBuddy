@@ -7,7 +7,10 @@ import classes from './FishList.module.scss';
 function FishList() {
   const [fishList, setFishList] = useState([]);
   const [isAddingNew, setIsAddingNew] = useState(false);
-  const [newCatch, setNewFish] = useState('');
+  const [newCatch, setNewFish] = useState({
+    title: '',
+    stats: '',
+  });
 
   const getCatches = async () => {
     try {
@@ -30,18 +33,19 @@ function FishList() {
 
   const addNewCatch = async (e) => {
     e.preventDefault();
-    if (newCatch.length <= 0) {
-      toast.error('Fish data is empty, fill in the stats!');
+    if (!newCatch.title.trim() || !newCatch.stats.trim()) {
+      toast.error('Fish data is empty, fill in all fields!');
       return;
     }
     try {
       const { data } = await axios.post('/api/fishes/', {
-        title: newCatch,
+        title: newCatch.title,
+        stats: newCatch.stats,
       });
       toast.success('New Fish added');
       setIsAddingNew(false);
-      setNewFish('');
-      setFishList([{ ...data }, ...fishList]);
+      setNewFish({ title: '', stats: '' }); // Clear the newCatch state
+      setFishList([data, ...fishList]); // Update fishList with the new catch data
     } catch (err) {
       console.log(err);
     }
@@ -72,9 +76,15 @@ function FishList() {
         <form className={classes.addNewForm} onSubmit={addNewCatch}>
           <input
             type="text"
-            value={newCatch}
-            onChange={(e) => setNewFish(e.target.value)}
+            value={newCatch.title}
+            onChange={(e) => setNewFish({ ...newCatch, title: e.target.value })}
             placeholder="Catch name"
+          />
+          <input
+            type="text"
+            value={newCatch.stats}
+            onChange={(e) => setNewFish({ ...newCatch, stats: e.target.value })}
+            placeholder="Catch weight/length"
           />
           <button type="submit">Upload</button>
         </form>
