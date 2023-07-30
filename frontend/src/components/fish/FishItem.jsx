@@ -1,37 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import classes from './FishItem.module.scss';
 
 function FishItem({ fish, deleteFish }) {
-  const [isCompleted, setIsCompleted] = useState(fish.completed);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleCheckboxClick = async () => {
+  const handleMarkAsComplete = async () => {
     try {
-      setIsLoading(true);
       await axios.put(`/api/fishes/${fish._id}`, {
-        completed: !isCompleted,
+        completed: true, // Always mark as complete since the checkbox is removed
       });
-      setIsCompleted(!isCompleted);
-      toast.success('Catch stats updated successfully');
+      toast.success('Catch marked as complete successfully');
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <tr className={classes.fish_item}>
       <td className={classes.fish_name}>
-        <div className={classes.checkbox} onChange={handleCheckboxClick} role="checkbox" aria-checked>
-          <input type="checkbox" checked={isCompleted} disabled={isLoading} readOnly tabIndex={-1} />
-        </div>
+        
         <p>{fish.title}</p>
       </td>
-      <td>{isCompleted ? 'Complete' : 'Incomplete'}</td>
+      {/* <td>{fish.completed ? 'Complete' : 'Incomplete'}</td> */}
       <td>{moment(fish.createdAt).format('HH:mm MMM Do YYYY')}</td>
       <td>
         <button
