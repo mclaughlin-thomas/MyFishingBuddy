@@ -76,12 +76,6 @@ function FishList() {
             onChange={(e) => setNewFish(e.target.value)}
             placeholder="Catch name"
           />
-          <input
-            type="text"
-            value={newCatch}
-            onChange={(e) => setNewFish(e.target.value)}
-            placeholder="Weight/Length of Fish"
-          />
           <button type="submit">Upload</button>
         </form>
       )}

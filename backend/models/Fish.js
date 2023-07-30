@@ -6,9 +6,10 @@ const fishSchema = new Schema({
         type: String,
         required: true,
     },
-    stats: {
-        type: String,
+    completed: {
+        type: Boolean,
         required: false,
+        default: false,
     },
     user: {
         type: Schema.Types.ObjectId,
